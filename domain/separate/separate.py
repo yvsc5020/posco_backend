@@ -5,15 +5,15 @@ import json
 
 path = 'domain/separate/c2i.pickle'
 
+mqttc = mqtt.Client()
+mqttc.connect("broker.mqtt-dashboard.com", 1883)
+
 with open(path, 'rb') as fr:
     change = pickle.load(fr)
 
 
 def split_text(text: str):
     result = []
-
-    mqttc = mqtt.Client('posco_backend')
-    mqttc.connect("localhost", 1883)
 
     split_text = list(text)
 
@@ -29,6 +29,6 @@ def split_text(text: str):
 
         result.append(change_int_list)
 
-    mqttc.publish('test', json.dumps(result))
+    mqttc.publish("posco_jamo", json.dumps(result))
 
-    return "200"
+    return result

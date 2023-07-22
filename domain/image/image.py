@@ -8,16 +8,19 @@ import pickle
 
 path = 'domain/separate/c2i.pickle'
 
+mqttc = mqtt.Client()
+mqttc.connect("broker.mqtt-dashboard.com", 1883)
+
 with open(path, 'rb') as fr:
     change = pickle.load(fr)
+
+model = Pororo(task='caption', lang='ko')
 
 
 def caption(file):
     dir = 'domain/image/file'
     for f in os.listdir(dir):
         os.remove(os.path.join(dir, f))
-
-    model = Pororo(task='caption', lang='ko')
 
     img = base64.b64decode(file)
     path = 'domain/image/file/image.jpg'
@@ -29,7 +32,7 @@ def caption(file):
     result = []
 
     mqttc = mqtt.Client('posco_backend')
-    mqttc.connect("localhost", 1883)
+    mqttc.connect("broker.mqtt-dashboard.com", 1883)
 
     split_text = list(caption_res.replace('.', ''))
 
@@ -45,6 +48,6 @@ def caption(file):
 
         result.append(change_int_list)
 
-    mqttc.publish('test', json.dumps(result))
+    mqttc.publish('posco', json.dumps(result))
 
     return caption_res
