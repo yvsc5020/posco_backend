@@ -13,6 +13,8 @@ with open(path, 'rb') as fr:
 
 
 def split_text(text: str):
+    mqttc.connect("broker.mqtt-dashboard.com", 1883)
+
     result = []
 
     split_text = list(text)
@@ -31,4 +33,4 @@ def split_text(text: str):
 
     mqttc.publish("posco_jamo", json.dumps(result))
 
-    return result
+    return json.dumps(result)

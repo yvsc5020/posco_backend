@@ -19,4 +19,4 @@ mqttc = mqtt.Client()
 mqttc.connect("broker.mqtt-dashboard.com", 1883)
 
 app.include_router(separate_router.router)
-# app.include_router(image_router.router)
+app.include_router(image_router.router)
