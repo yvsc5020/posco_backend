@@ -17,7 +17,7 @@ def split_text(text: str):
 
     result = []
 
-    split_text = list(text)
+    split_text = list(text.lower())
 
     for word in split_text:
         change_int_list = []

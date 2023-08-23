@@ -60,7 +60,7 @@ def caption(file):
         f.write(img)
 
     text = predict_step(path)[0]
-    caption_text = translater.translate(text, dest='ko').text
+    caption_text = translater.translate(text, dest='ko').text.lower()
 
     result = []
 
