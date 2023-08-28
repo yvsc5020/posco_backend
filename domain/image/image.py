@@ -60,11 +60,10 @@ def caption(file):
         f.write(img)
 
     text = predict_step(path)[0]
-    caption_text = translater.translate(text, dest='ko').text.lower()
 
     result = []
 
-    split_text = list(caption_text.replace('.', ''))
+    split_text = list(text.replace('.', ''))
 
     for word in split_text:
         change_int_list = []
@@ -80,4 +79,4 @@ def caption(file):
 
     mqttc.publish('posco', json.dumps(result))
 
-    return caption_text
+    return text
